@@ -1,17 +1,14 @@
-# Project Title
+# Passport Control System 
 
-Simple overview of use/purpose.
+This Solidity smart contract, Passport control system, is designed to manage the creation, revocation, view and renewal of passports on the Ethereum blockchain.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+The Passport control system Solidity smart contract is a decentralized system built on the Ethereum blockchain to manage the lifecycle of a travel passport, including creation, cancellation, view and renewal.
 
 ## Getting Started
 
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+In this assessment, I have used remix IDE [https://remix.ethereum.org/]
 
 ### Executing program
 
