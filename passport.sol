@@ -19,40 +19,61 @@ contract PassportManagement {
     mapping(uint => Passport) public passports;
     uint public nextPassportId = 1;
 
-    function createPassport(
-        address _owner,
-        PassportType _passportType,
-        string memory _name,
-        string memory _nationality,
-        uint _dateOfBirth,
-        uint _issueDate,
-        uint _expiryDate
-    ) public {
-        passports[nextPassportId++] = Passport(
-            _owner, 
-            _passportType, 
-            _name, 
-            _nationality, 
-            _dateOfBirth, 
-            _issueDate, 
-            _expiryDate, 
-            true
-        );
-    }
+    event PassportCreationAttempt(address owner, uint issueDate, uint expiryDate);
+
+function createPassport(
+    address _owner,
+    PassportType _passportType,
+    string memory _name,
+    string memory _nationality,
+    uint _dateOfBirth,
+    uint _issueDate,
+    uint _expiryDate
+) public {
+    emit PassportCreationAttempt(_owner, _issueDate, _expiryDate);
+    require(_issueDate < _expiryDate, "Issue date must be before expiry date");
+
+    passports[nextPassportId++] = Passport(
+        _owner, 
+        _passportType, 
+        _name, 
+        _nationality, 
+        _dateOfBirth, 
+        _issueDate, 
+        _expiryDate, 
+        true
+    );
+}
+
 
     function revokePassport(uint _passportId) public {
-        require(passports[_passportId].isValid, "Already invalid");
-        passports[_passportId].isValid = false;
+        Passport storage passport = passports[_passportId];
+        // Check if passport exists and is valid
+        require(passport.owner != address(0), "Passport does not exist");
+        require(passport.isValid, "Passport is already invalid");
+        require(passport.owner == msg.sender, "Unauthorized");
+
+        passport.isValid = false;
     }
 
     function viewPassport(uint _passportId) public view returns (Passport memory) {
-        require(passports[_passportId].owner == msg.sender, "Unauthorized");
-        return passports[_passportId];
+        Passport memory passport = passports[_passportId];
+        // Check if passport exists and is valid
+        require(passport.owner != address(0), "Passport does not exist");
+        require(passport.isValid, "Passport is invalid");
+        require(passport.owner == msg.sender || msg.sender == address(0), "Unauthorized"); // Example: Allow anyone to view valid passports
+
+        return passport;
     }
 
     function renewPassport(uint _passportId, uint _newExpiryDate) public {
-        require(passports[_passportId].isValid, "Invalid passport");
-        require(passports[_passportId].owner == msg.sender, "Unauthorized");
-        passports[_passportId].expiryDate = _newExpiryDate;
+        Passport storage passport = passports[_passportId];
+        // Check if passport exists and is valid
+        require(passport.owner != address(0), "Passport does not exist");
+        require(passport.isValid, "Invalid passport");
+        require(passport.owner == msg.sender, "Unauthorized");
+        require(_newExpiryDate > passport.expiryDate, "New expiry date must be after current expiry date");
+
+        passport.expiryDate = _newExpiryDate;
     }
 }
