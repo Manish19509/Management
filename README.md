@@ -12,16 +12,6 @@ In this assessment, I have used remix IDE [https://remix.ethereum.org/]
 
 ### Executing program
 
-* written code as shown below
-  
-* Compile the code
-  
-* ![image](https://github.com/Manish19509/token/assets/137030058/6eb7894e-f714-41f6-b7ec-d8d6a2c46808)
-
-* make the compiler version the same as mentioned in the program.
-* Go to the deploy and transact section and click on transact after selecting the account.
-* By clicking on the transact we will be able to see the deployed contracts.
-* By coping account address, adding it to burn and mint and puting value the total supply will change according to the code.
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
@@ -82,10 +72,13 @@ contract PassportManagement {
     }
 }
 ```
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.7" (or another compatible version), and then click on the "Compile AccountManagement.sol" button.
+
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "Passport Control System" contract from the dropdown menu, and then click on the "Deploy" button.
 
 ## Authors
 
-Manish Kumar gmail - manishkeshri19509@gmail.com
+Manish Kumar - (https://www.linkedin.com/in/manish-kmr/)
 
 
 ## License
